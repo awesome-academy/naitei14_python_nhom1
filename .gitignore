@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+
+# Virtual environment
+venv/
+env/
+*.env
+
+# Django stuff
+*.log
+staticfiles/
+media/
+db.sqlite3
+
+# VSCode
+.vscode/
+
+# OS files
+Thumbs.db
+*.DS_Store
+
+# Migrations (optional: chỉ ignore if bạn tự sinh lại)
+# **KHÔNG khuyến cáo bỏ qua migrations!**
+# main/migrations/*.py
+# !main/migrations/__init__.py

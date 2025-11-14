@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+{% block title %}Danh sách sân{% endblock %}
+
+{% block content %}
+<h1>Danh sách sân bóng</h1>
+
+{% for pitch in pitches %}
+  <div class="card mb-3 p-3 border rounded">
+    <h4>{{ pitch.name }}</h4>
+    <p>Địa chỉ: {{ pitch.address }}</p>
+    <p>Giá: {{ pitch.base_price_per_hour }} VND / giờ</p>
+
+    {% if user.is_authenticated and user.role == "User" %}
+      <a href="{% url 'book_pitch' pitch.id %}" class="btn btn-success">Đặt sân</a>
+    {% else %}
+      <a href="{% url 'login' %}?next={% url 'book_pitch' pitch.id %}" class="btn btn-outline-primary">
+        🔑 Đăng nhập để đặt sân
+      </a>
+    {% endif %}
+  </div>
+{% empty %}
+  <p>Chưa có sân nào được thêm.</p>
+{% endfor %}
+{% endblock %}
