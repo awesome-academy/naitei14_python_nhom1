@@ -13,4 +13,3 @@ def user_role_context(request):
         'is_admin': False,
         'is_user': False
     }
-    

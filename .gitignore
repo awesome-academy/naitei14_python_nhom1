@@ -72,3 +72,12 @@ build/
 htmlcov/
 .coverage
 .coverage.*
+
+PitchManager/config.json
+
+main/templates/user/favorites.html
+main/templates/user/favorites.html
+
+.eslintrc.js
+.sunlint-eslint.config.js
+.sunlint.json

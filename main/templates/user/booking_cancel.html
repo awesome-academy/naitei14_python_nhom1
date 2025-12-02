@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Hủy đặt sân #{{ booking.id }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h3><i class="fas fa-exclamation-triangle"></i> Xác nhận hủy đặt sân</h3>
+            </div>
+            <div class="card-body">
+                <p class="lead">Bạn có chắc chắn muốn hủy đặt sân này không?</p>
+                
+                <div class="alert alert-warning">
+                    <strong>Thông tin đặt sân:</strong><br>
+                    Sân: {{ booking.pitch.name }}<br>
+                    Ngày: {{ booking.booking_date|date:"d/m/Y" }}<br>
+                    Giờ: {{ booking.time_slot.time_slot.name }}
+                </div>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger btn-lg">
+                            <i class="fas fa-times"></i> Xác nhận Hủy
+                        </button>
+                        <a href="{% url 'user_booking_detail' booking.id %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Quay lại
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
