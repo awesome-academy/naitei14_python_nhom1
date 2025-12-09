@@ -1,6 +1,6 @@
 .card {
     background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     border-radius: 12px;
 }
 
@@ -103,13 +103,13 @@
     box-shadow: 0 4px 8px rgba(13, 110, 253, 0.15);
 }
 
-.btn-check:checked + .time-slot-btn {
+.btn-check:checked+.time-slot-btn {
     border-color: #0d6efd;
     background-color: #e7f3ff;
     box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.2);
 }
 
-.btn-check:disabled + .time-slot-btn {
+.btn-check:disabled+.time-slot-btn {
     opacity: 0.5;
     cursor: not-allowed;
     background-color: #f8f9fa;
@@ -117,7 +117,7 @@
 
 .btn-check {
     position: absolute;
-    clip: rect(0,0,0,0);
+    clip: rect(0, 0, 0, 0);
     pointer-events: none;
 }
 

@@ -1,0 +1,9 @@
+.pitch-card-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.pitch-card-placeholder {
+    height: 200px;
+    line-height: 200px;
+}
