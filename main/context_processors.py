@@ -1,3 +1,6 @@
+from .constants import BOOKING_STATUS_PENDING, BOOKING_STATUS_CONFIRMED, BOOKING_STATUS_CANCELLED
+
+
 def user_role_context(request):
     """
     Context processor để tự động thêm thông tin role của user vào mọi template
@@ -13,4 +16,11 @@ def user_role_context(request):
         'is_admin': False,
         'is_user': False
     }
-    
+
+
+def global_context(request):
+    return {
+        'BOOKING_STATUS_PENDING': BOOKING_STATUS_PENDING,
+        'BOOKING_STATUS_CONFIRMED': BOOKING_STATUS_CONFIRMED,
+        'BOOKING_STATUS_CANCELLED': BOOKING_STATUS_CANCELLED,
+    }

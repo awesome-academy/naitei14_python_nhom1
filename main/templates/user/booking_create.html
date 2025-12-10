@@ -1,0 +1,354 @@
+<!-- templates/user/booking_create.html -->
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Đặt sân - {{ pitch.name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking_create.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <!-- Main Content -->
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-calendar-check"></i> Đặt sân bóng
+                </h4>
+            </div>
+            <div class="card-body">
+
+                <!-- Pitch Info -->
+                <div class="alert alert-info mb-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h5 class="mb-1">
+                                <i class="fas fa-futbol"></i> {{ pitch.name }}
+                            </h5>
+                            <p class="mb-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                                {{ pitch.facility.address|default:"Chưa có địa chỉ" }}
+                            </p>
+                            <p class="mb-0">
+                                <i class="fas fa-tag"></i>
+                                Loại sân: {{ pitch.pitch_type.name|default:"N/A" }}
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <span class="badge bg-warning text-dark fs-5">
+                                {{ pitch.base_price_per_hour|floatformat:0 }}đ/giờ
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Form -->
+                <form method="post" id="bookingForm">
+                    {% csrf_token %}
+
+                    <!-- Hidden pitch field -->
+                    <input type="hidden" name="pitch" value="{{ pitch.id }}">
+
+                    <!-- Step 1: Chọn ngày -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-calendar"></i>
+                            Bước 1: Chọn ngày đặt sân
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="date" name="booking_date" id="bookingDate"
+                            class="form-control form-control-lg {% if form.booking_date.errors %}is-invalid{% endif %}"
+                            value="{{ booking_date|date:'Y-m-d'|default:'' }}" min="{{ today }}" required>
+                        {% if form.booking_date.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in form.booking_date.errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Step 2: Chọn khung giờ (chỉ hiện khi đã chọn ngày) -->
+                    {% if booking_date %}
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-clock"></i>
+                            Bước 2: Chọn khung giờ
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <!-- Hidden field để lưu time_slot đã chọn -->
+                        <input type="hidden" name="time_slot" id="selectedTimeSlot" value="" required>
+
+                        {% if available_time_slots %}
+                        <div class="row g-3" id="timeSlotsGrid">
+                            {% for slot in available_time_slots %}
+                            <div class="col-md-6">
+                                <div class="card time-slot-card {{ slot.is_available|yesno:',disabled' }}"
+                                    data-slot-id="{{ slot.id }}" data-slot-name="{{ slot.name }}"
+                                    data-slot-time="{{ slot.start_time|time:'H:i' }} - {{ slot.end_time|time:'H:i' }}"
+                                    data-slot-price="{{ slot.price }}"
+                                    data-available="{{ slot.is_available|yesno:'true,false' }}">
+
+                                    <div class="card-body py-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">{{ slot.name }}</h6>
+                                                <small class="text-muted">
+                                                    <i class="far fa-clock"></i>
+                                                    {{ slot.start_time|time:"H:i" }} - {{ slot.end_time|time:"H:i" }}
+                                                    <br>
+                                                    <i class="fas fa-hourglass-half"></i>
+                                                    {{ slot.duration }} giờ
+                                                </small>
+                                            </div>
+                                            <div class="text-end">
+                                                <span class="price-tag text-success">
+                                                    {{ slot.price|floatformat:0 }}đ
+                                                </span>
+                                                <br>
+                                                {% if slot.is_available %}
+                                                <span class="badge bg-success">
+                                                    <i class="fas fa-check"></i> Còn trống
+                                                </span>
+                                                {% else %}
+                                                <span class="badge bg-secondary">
+                                                    <i class="fas fa-times"></i> Đã đặt
+                                                </span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        {% else %}
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Không có khung giờ nào khả dụng cho ngày này.
+                        </div>
+                        {% endif %}
+
+                        {% if form.time_slot.errors %}
+                        <div class="text-danger mt-2">
+                            {% for error in form.time_slot.errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Selected Slot Summary -->
+                    <div id="selectedSlotInfo" class="alert alert-success d-none mb-4">
+                        <div class="row">
+                            <div class="col">
+                                <strong><i class="fas fa-check-circle"></i> Đã chọn:</strong>
+                                <span id="selectedSlotName"></span>
+                                (<span id="selectedSlotTime"></span>)
+                            </div>
+                            <div class="col-auto">
+                                <strong class="fs-5" id="selectedSlotPrice"></strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Voucher -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-ticket-alt"></i>
+                            Bước 3: Mã giảm giá (tùy chọn)
+                        </label>
+                        <div class="input-group">
+                            <input type="text" name="voucher_code" id="voucherCode" class="form-control"
+                                placeholder="Nhập mã giảm giá" value="{{ form.voucher_code.value|default:'' }}">
+                            <button type="button" class="btn btn-outline-secondary" id="checkVoucherBtn">
+                                Kiểm tra
+                            </button>
+                        </div>
+                        <div id="voucherMessage" class="form-text"></div>
+                    </div>
+
+                    <!-- Step 4: Ghi chú -->
+                    <div class="mb-4">
+                        <label class="form-label fw-bold">
+                            <i class="fas fa-sticky-note"></i>
+                            Bước 4: Ghi chú (tùy chọn)
+                        </label>
+                        <textarea name="note" class="form-control" rows="3"
+                            placeholder="Ví dụ: Cần bóng, đến sớm 15 phút...">{{ form.note.value|default:'' }}</textarea>
+                    </div>
+
+                    {% else %}
+                    <!-- Chưa chọn ngày -->
+                    <div class="alert alert-warning">
+                        <i class="fas fa-info-circle"></i>
+                        Vui lòng chọn ngày ở trên để xem các khung giờ có sẵn.
+                    </div>
+                    {% endif %}
+
+                    <!-- Form Errors -->
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                        <p class="mb-0">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Submit Buttons -->
+                    <div class="d-grid gap-2">
+                        {% if booking_date and available_time_slots %}
+                        <button type="submit" class="btn btn-success btn-lg" id="submitBtn" disabled>
+                            <i class="fas fa-check"></i> Xác nhận đặt sân
+                        </button>
+                        {% endif %}
+                        <a href="{% url 'facility_detail' pitch.facility.id %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Quay lại
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+        <!-- Accordion for Instructions and Notes -->
+        <div class="accordion shadow mb-4" id="bookingAccordion">
+            <!-- Instructions -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingInstructions">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseInstructions" aria-expanded="true"
+                        aria-controls="collapseInstructions">
+                        <i class="fas fa-question-circle me-2 text-info"></i> Hướng dẫn đặt sân
+                    </button>
+                </h2>
+                <div id="collapseInstructions" class="accordion-collapse collapse show"
+                    aria-labelledby="headingInstructions" data-bs-parent="#bookingAccordion">
+                    <div class="accordion-body bg-light">
+                        <ol class="ps-3 mb-0 small">
+                            <li class="mb-2">Chọn ngày bạn muốn đặt sân</li>
+                            <li class="mb-2">Chọn khung giờ còn trống (màu xanh)</li>
+                            <li class="mb-2">Nhập mã giảm giá nếu có</li>
+                            <li class="mb-2">Thêm ghi chú nếu cần</li>
+                            <li>Nhấn "Xác nhận đặt sân"</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingNotes">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseNotes" aria-expanded="false" aria-controls="collapseNotes">
+                        <i class="fas fa-info-circle me-2 text-warning"></i> Lưu ý quan trọng
+                    </button>
+                </h2>
+                <div id="collapseNotes" class="accordion-collapse collapse" aria-labelledby="headingNotes"
+                    data-bs-parent="#bookingAccordion">
+                    <div class="accordion-body bg-light">
+                        <ul class="list-unstyled mb-0 small">
+                            <li class="mb-2">
+                                <i class="fas fa-clock text-primary me-1"></i>
+                                Đặt trước tối thiểu 1 ngày
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-credit-card text-success me-1"></i>
+                                Thanh toán khi đến sân
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-ban text-danger me-1"></i>
+                                Hủy miễn phí trước 24 giờ
+                            </li>
+                            <li>
+                                <i class="fas fa-phone text-info me-1"></i>
+                                Hotline: 0123-456-789
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <div class="card shadow">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 text-primary"><i class="fas fa-star text-warning"></i> Đánh giá</h5>
+                <span class="badge bg-secondary rounded-pill">{{ reviews.count|default:"0" }}</span>
+            </div>
+            <div class="card-body p-0">
+                {% if can_review %}
+                <div class="p-3 bg-light border-bottom">
+                    <h6 class="fw-bold mb-2">Viết đánh giá của bạn</h6>
+                    <form action="{% url 'add_review' pitch.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="d-flex align-items-center mb-2">
+                            <select name="rating" class="form-select form-select-sm w-auto me-2">
+                                <option value="5">5 sao - Tuyệt vời</option>
+                                <option value="4">4 sao - Tốt</option>
+                                <option value="3">3 sao - Bình thường</option>
+                                <option value="2">2 sao - Tệ</option>
+                                <option value="1">1 sao - Rất tệ</option>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <textarea name="content" class="form-control form-control-sm" rows="2" required
+                                placeholder="Chia sẻ trải nghiệm..."></textarea>
+                        </div>
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-primary btn-sm">Gửi</button>
+                        </div>
+                    </form>
+                </div>
+                {% elif has_reviewed %}
+                <div class="p-3 bg-light border-bottom text-center">
+                    <p class="mb-0 text-success"><i class="fas fa-check-circle"></i> Bạn đã đánh giá sân này.</p>
+                </div>
+                {% endif %}
+
+                <div class="review-list" style="max-height: 400px; overflow-y: auto;">
+                    {% if reviews %}
+                    {% for review in reviews %}
+                    <div class="p-3 border-bottom">
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <div>
+                                <strong class="text-dark">{% firstof review.user.full_name review.user.username %}</strong>
+                                <div class="small text-warning">
+                                    {% for i in "12345"|make_list %}
+                                    {% if forloop.counter <= review.rating %} <i class="fas fa-star"></i>
+                                        {% else %}
+                                        <i class="far fa-star"></i>
+                                        {% endif %}
+                                        {% endfor %}
+                                </div>
+                            </div>
+                            <small class="text-muted" style="font-size: 0.8rem;">{{ review.created_at|date:"d/m/Y" }}</small>
+                        </div>
+                        <p class="mb-0 small text-secondary">{{ review.content }}</p>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="text-center py-4 text-muted">
+                        <i class="far fa-comment-dots fa-2x mb-2"></i>
+                        <p class="mb-0 small">Chưa có đánh giá nào.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    window.checkVoucherUrl = "{% url 'ajax_check_voucher' %}";
+</script>
+<script type="module" src="{% static 'js/booking_create.js' %}"></script>
+{% endblock %}

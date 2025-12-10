@@ -3,24 +3,29 @@ from urllib.parse import urlencode
 
 register = template.Library()
 
+
 @register.filter
 def get_item(dictionary, key):
-    return dictionary.get(key)
+    """Get item from dictionary safely"""
+    if isinstance(dictionary, dict):
+        return dictionary.get(key)
+    return None
+
 
 @register.filter
 def param_replace(value, arg):
     if not isinstance(value, dict):
         return value
-    
+
     params = value.copy()
-    
+
     if '=' in arg:
-        updates = arg.split('=', 1)  
+        updates = arg.split('=', 1)
         key = updates[0]
         new_value = updates[1] if len(updates) > 1 else ''
-        
+
         new_value = str(new_value).strip() if new_value else ''
-        
+
         if isinstance(params.get(key), list):
             params[key] = [new_value] if new_value else []
         else:
@@ -28,23 +33,25 @@ def param_replace(value, arg):
                 params[key] = new_value
             else:
                 params.pop(key, None)
-    
+
     return urlencode(params, doseq=True)
+
 
 @register.filter
 def param_remove(value, key_to_remove):
     if not isinstance(value, dict):
         return value
-    
+
     params = value.copy()
     params.pop(key_to_remove, None)
     return urlencode(params, doseq=True)
+
 
 @register.filter
 def price_range_display(value):
     if isinstance(value, list):
         value = value[0] if value else ''
-    
+
     price_ranges = {
         '0-100000': 'Dưới 100,000đ/giờ',
         '100000-200000': '100,000đ - 200,000đ/giờ',
@@ -53,8 +60,21 @@ def price_range_display(value):
     }
     return price_ranges.get(value, value)
 
+
 @register.filter
 def get_single_value(value):
     if isinstance(value, list):
         return value[0] if value else ''
     return value
+
+
+@register.filter
+def selected_if(value, arg):
+    """
+    Trả về 'selected' nếu value == arg, ngược lại trả về ''
+    Usage: <option value="{{ type.id }}" {{ type.id|selected_if:request_get.pitch_type }}>
+    """
+    try:
+        return 'selected' if str(value) == str(arg) else ''
+    except BaseException:
+        return ''

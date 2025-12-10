@@ -1,0 +1,26 @@
+.time-slot-card {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.time-slot-card:hover:not(.disabled) {
+    border-color: #198754;
+    transform: translateY(-2px);
+}
+
+.time-slot-card.selected {
+    border-color: #198754;
+    border-width: 3px;
+    background-color: #d1e7dd;
+}
+
+.time-slot-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.price-tag {
+    font-size: 1.1rem;
+    font-weight: bold;
+}

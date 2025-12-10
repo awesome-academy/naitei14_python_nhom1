@@ -61,6 +61,9 @@ build/
 # Ignore migration files
 */migrations/*.py
 !*/migrations/__init__.py
+# Ignore migration files
+*/migrations/*.py
+!*/migrations/__init__.py
 
 # PyCharm
 .idea/
@@ -74,3 +77,14 @@ htmlcov/
 .coverage.*
 
 .env
+
+PitchManager/config.json
+
+main/templates/user/favorites.html
+
+.eslintrc.js
+.eslintrc.json
+.sunlint-eslint.config.js
+.sunlint.json
+get-pip.py
+
