@@ -1,8 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% load custom_filters %}
+{% load i18n %}
 
-{% block title %}Đặt sân - {{ pitch.name }}{% endblock %}
+{% block title %}{% trans "Book Pitch" %} - {{ pitch.name }}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/book_pitch.css' %}">
@@ -14,13 +14,13 @@
         <div class="col-12">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'pitch_list' %}">Danh sách sân</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'pitch_list' %}">{% trans "Pitch List" %}</a></li>
                     <li class="breadcrumb-item active">{{ pitch.name }}</li>
                 </ol>
             </nav>
             <div class="page-header">
-                <h1 class="mb-2">Đặt Sân: {{ pitch.name }}</h1>
-                <p class="text-muted mb-0">Chọn ngày và khung giờ phù hợp để đặt sân</p>
+                <h1 class="mb-2">{% trans "Book Pitch" %}: {{ pitch.name }}</h1>
+                <p class="text-muted mb-0">{% trans "Select date and time slot that suits you" %}</p>
             </div>
         </div>
     </div>
@@ -30,8 +30,7 @@
             <div class="card border-0 h-100">
                 <div class="pitch-image-container">
                     {% if pitch.images and pitch.images|length > 0 %}
-                        <img src="{{ pitch.images.0 }}" class="card-img-top" alt="{{ pitch.name }}"
-                             onerror="this.src='{{ default_pitch_image }}'">
+                        <img src="{{ pitch.images.0 }}" class="card-img-top" alt="{{ pitch.name }}">
                     {% else %}
                         <img src="{{ default_pitch_image }}" class="card-img-top" alt="{{ pitch.name }}">
                     {% endif %}
@@ -39,12 +38,8 @@
 
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h3 class="card-title mb-0 h5 fw-semibold">
-                            {{ pitch.name }}
-                        </h3>
-                        <span class="badge bg-dark pitch-type-badge">
-                            {{ pitch.pitch_type.name }}
-                        </span>
+                        <h3 class="card-title mb-0 h5 fw-semibold">{{ pitch.name }}</h3>
+                        <span class="badge bg-dark pitch-type-badge">{{ pitch.pitch_type.name }}</span>
                     </div>
 
                     {% if pitch.facility %}
@@ -65,12 +60,10 @@
                     {% endif %}
 
                     <div class="py-3 px-3 mb-3 price-box">
-                        <div class="text-muted price-label">
-                            Giá thuê cơ bản
-                        </div>
+                        <div class="text-muted price-label">{% trans "Base Rental Price" %}</div>
                         <div class="price-value">
                             {{ pitch.base_price_per_hour|floatformat:0 }}đ
-                            <span class="price-unit">/giờ</span>
+                            <span class="price-unit">/{% trans "hour" %}</span>
                         </div>
                     </div>
 
@@ -78,13 +71,13 @@
                     <div class="mb-3">
                         <form method="POST" action="{% url 'toggle_favorite' pitch.id %}" style="display: inline;">
                             {% csrf_token %}
-                            <button type="submit" class="btn btn-outline-danger w-100 favorite-btn" id="favoriteBtn">
+                            <button type="submit" class="btn btn-outline-danger w-100 favorite-btn">
                                 <i class="fas fa-heart me-2"></i>
-                                <span id="favoriteBtnText">
+                                <span>
                                     {% if pitch.is_favorited %}
-                                    Bỏ yêu thích
+                                    {% trans "Remove from Favorites" %}
                                     {% else %}
-                                    Thêm vào yêu thích
+                                    {% trans "Add to Favorites" %}
                                     {% endif %}
                                 </span>
                             </button>
@@ -94,7 +87,7 @@
 
                     {% if pitch.pitch_type.description %}
                     <div class="alert alert-light border">
-                        <strong>Thông tin loại sân:</strong>
+                        <strong>{% trans "Pitch Type Information" %}:</strong>
                         <p class="mb-0 mt-2">{{ pitch.pitch_type.description }}</p>
                     </div>
                     {% endif %}
@@ -107,45 +100,40 @@
                 <div class="card-body">
                     <h4 class="card-title mb-4 section-title">
                         <i class="fas fa-calendar-alt me-2 text-primary"></i>
-                        Đặt lịch
+                        {% trans "Schedule" %}
                     </h4>
 
                     <form method="GET" action="" class="mb-4" id="dateSelectionForm">
                         <div class="mb-3">
                             <label for="{{ date_form.booking_date.id_for_label }}" class="form-label fw-semibold">
-                                Chọn ngày đặt sân
+                                {% trans "Select Booking Date" %}
                             </label>
                             {{ date_form.booking_date }}
-                            <div class="form-text">Chọn ngày bạn muốn đặt sân (từ hôm nay trở đi)</div>
+                            <div class="form-text">{% trans "Select the date you want to book (from today onwards)" %}</div>
                         </div>
                         <button type="submit" class="btn btn-primary btn-sm">
                             <i class="fas fa-sync-alt me-1"></i>
-                            Xem khung giờ có sẵn
+                            {% trans "View Available Time Slots" %}
                         </button>
                     </form>
 
                     {% if selected_date %}
                     <form method="POST" action="{% url 'book_pitch' pitch.id %}" id="bookingForm">
                         {% csrf_token %}
-                        
-                        <input type="hidden" name="booking_date" value="{{ selected_date }}" id="hiddenBookingDate">
+                        <input type="hidden" name="booking_date" value="{{ selected_date }}">
                         
                         <div class="mb-4">
                             <label class="form-label fw-semibold">
                                 <i class="fas fa-clock me-1"></i>
-                                Chọn khung giờ ({{ selected_date }})
+                                {% trans "Select Time Slot" %} ({{ selected_date }})
                             </label>
                             
                             {% if available_time_slots %}
                             <div class="row g-3">
                                 {% for slot in available_time_slots %}
                                 <div class="col-md-6">
-                                    <input type="radio" 
-                                           class="btn-check" 
-                                           name="time_slot" 
-                                           id="time_slot_{{ slot.id }}" 
-                                           value="{{ slot.id }}"
-                                           required>
+                                    <input type="radio" class="btn-check" name="time_slot" 
+                                           id="time_slot_{{ slot.id }}" value="{{ slot.id }}" required>
                                     <label class="time-slot-btn w-100" for="time_slot_{{ slot.id }}">
                                         <div class="text-muted small mb-1">
                                             <i class="far fa-clock me-1"></i>
@@ -160,11 +148,6 @@
                                                 {{ slot.price|floatformat:0 }}đ
                                             {% endif %}
                                         </div>
-                                        {% if slot.discounted_price %}
-                                        <div class="small text-success">
-                                            Giảm {{ slot.discount_percent }}% với voucher
-                                        </div>
-                                        {% endif %}
                                     </label>
                                 </div>
                                 {% endfor %}
@@ -172,7 +155,7 @@
                             {% else %}
                             <div class="alert alert-warning">
                                 <i class="fas fa-exclamation-triangle me-2"></i>
-                                Không có khung giờ nào khả dụng cho ngày này. Vui lòng chọn ngày khác.
+                                {% trans "No available time slots for this date. Please choose another date." %}
                             </div>
                             {% endif %}
                         </div>
@@ -181,22 +164,13 @@
                         <div class="mb-4">
                             <label for="id_voucher_code" class="form-label fw-semibold">
                                 <i class="fas fa-ticket-alt me-1"></i>
-                                Mã giảm giá (nếu có)
+                                {% trans "Discount Code (if you have)" %}
                             </label>
                             <div class="input-group">
-                                <input type="text" 
-                                       name="voucher_code" 
-                                       id="id_voucher_code"
-                                       class="form-control"
-                                       placeholder="Nhập mã giảm giá"
-                                       value="{{ voucher_code }}">
-                                <button class="btn btn-outline-secondary" 
-                                        name="form_action"
-                                        value="preview_voucher"
-                                        form="bookingForm"
-                                        type="submit">
-                                    <i class="fas fa-check me-1"></i>
-                                    Kiểm tra
+                                <input type="text" name="voucher_code" id="id_voucher_code" class="form-control"
+                                       placeholder="{% trans 'Enter discount code' %}" value="{{ voucher_code }}">
+                                <button class="btn btn-outline-secondary" type="submit" name="form_action" value="preview_voucher">
+                                    <i class="fas fa-check me-1"></i> {% trans "Check" %}
                                 </button>
                             </div>
                             {% if voucher_message %}
@@ -214,19 +188,15 @@
                         <div class="mb-4">
                             <label for="id_note" class="form-label fw-semibold">
                                 <i class="fas fa-sticky-note me-1"></i>
-                                Ghi chú thêm
+                                {% trans "Additional Note" %}
                             </label>
-                            <textarea name="note" 
-                                      id="id_note"
-                                      class="form-control"
-                                      rows="3"
-                                      placeholder="Nhập ghi chú của bạn..."></textarea>
+                            <textarea name="note" id="id_note" class="form-control" rows="3"
+                                      placeholder="{% trans 'Enter your note...' %}"></textarea>
                         </div>
 
                         <div class="d-grid">
                             <button type="submit" class="btn btn-primary btn-lg" name="form_action" value="submit_booking">
-                                <i class="fas fa-check-circle me-2"></i>
-                                Xác nhận đặt sân
+                                <i class="fas fa-check-circle me-2"></i> {% trans "Confirm Booking" %}
                             </button>
                         </div>
                         {% endif %}
@@ -234,7 +204,7 @@
                     {% else %}
                     <div class="alert alert-info text-center">
                         <i class="fas fa-info-circle me-2"></i>
-                        Vui lòng chọn ngày để xem khung giờ có sẵn
+                        {% trans "Please select a date to view available time slots" %}
                     </div>
                     {% endif %}
                 </div>
@@ -242,7 +212,6 @@
         </div>
     </div>
 </div>
-
 {% endblock %}
 
 {% block extra_js %}

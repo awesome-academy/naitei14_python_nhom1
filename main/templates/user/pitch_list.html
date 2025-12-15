@@ -1,44 +1,46 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load custom_filters %}
+{% load i18n %}
 
-{% block title %}Danh sách sân{% endblock %}
+{% block title %}{% trans "Pitch List" %}{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/pitch_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/favourite.css' %}">
 {% endblock %}
 
 {% block content %}
 <div class="container py-4">
     <div class="mb-4 page-header">
-        <h1 class="mb-2">Danh Sách Sân Bóng</h1>
-        <p class="text-muted mb-0 page-subtitle">Chọn sân và đặt lịch ngay</p>
+        <h1 class="mb-2">{% trans "Pitch List" %}</h1>
+        <p class="text-muted mb-0 page-subtitle">{% trans "Choose a pitch and book now" %}</p>
     </div>
 
     <div class="card border-0 mb-4">
         <div class="card-body">
             <h5 class="card-title mb-3 search-section-title">
-                <i class="fas fa-search me-2"></i>Tìm Kiếm Sân Bóng
+                <i class="fas fa-search me-2"></i>{% trans "Search Pitches" %}
             </h5>
 
             <form method="GET" action="{% url 'pitch_list' %}" class="row g-3">
                 <div class="col-lg-4 col-md-6">
-                    <label class="form-label small text-muted mb-1 form-label-small">Tìm theo từ khóa</label>
+                    <label class="form-label small text-muted mb-1 form-label-small">{% trans "Search by keyword" %}</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0">
                             <i class="fas fa-search text-muted"></i>
                         </span>
                         <input type="text" name="q" class="form-control border-start-0"
-                            placeholder="Tên sân, cơ sở, địa chỉ..." value="{{ request_get.q }}">
+                            placeholder="{% trans 'Pitch name, facility, address...' %}" value="{{ request_get.q }}">
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <label class="form-label small text-muted mb-1 form-label-small">Loại sân</label>
+                    <label class="form-label small text-muted mb-1 form-label-small">{% trans "Pitch Type" %}</label>
                     <select name="pitch_type" class="form-select">
-                        <option value="">Tất cả loại sân</option>
+                        <option value="">{% trans "All Types" %}</option>
                         {% for type in pitch_types %}
-                        <option value="{{ type.id }}" {{ type.id|selected_if:request_get|get_item:"pitch_type" }}>
+                        <option value="{{ type.id }}" {% if request_get.pitch_type == type.id|stringformat:"i" %}selected{% endif %}>
                             {{ type.name }}
                         </option>
                         {% endfor %}
@@ -46,21 +48,17 @@
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <label class="form-label small text-muted mb-1 form-label-small">Mức giá</label>
+                    <label class="form-label small text-muted mb-1 form-label-small">{% trans "Price Range" %}</label>
                     <select name="price_range" class="form-select">
-                        <option value="">Tất cả mức giá</option>
-                        <option value="0-100000" {{ "0-100000" |selected_if:request_get|get_item:"price_range" }}>Dưới
-                            100,000đ/giờ
-                        </option>
-                        <option value="100000-200000" {{ "100000-200000" |selected_if:request_get|get_item:"price_range"
-                            }}>
-                            100,000đ - 200,000đ/giờ</option>
-                        <option value="200000-300000" {{ "200000-300000" |selected_if:request_get|get_item:"price_range"
-                            }}>
-                            200,000đ - 300,000đ/giờ</option>
-                        <option value="300000" {{ "300000" |selected_if:request_get|get_item:"price_range" }}>Trên
-                            300,000đ/giờ
-                        </option>
+                        <option value="">{% trans "All Prices" %}</option>
+                        <option value="0-100000" {% if request_get.price_range == "0-100000" %}selected{% endif %}>
+                            {% trans "Under 100,000đ/hour" %}</option>
+                        <option value="100000-200000" {% if request_get.price_range == "100000-200000" %}selected{% endif %}>
+                            {% trans "100,000đ - 200,000đ/hour" %}</option>
+                        <option value="200000-300000" {% if request_get.price_range == "200000-300000" %}selected{% endif %}>
+                            {% trans "200,000đ - 300,000đ/hour" %}</option>
+                        <option value="300000" {% if request_get.price_range == "300000" %}selected{% endif %}>
+                            {% trans "Over 300,000đ/hour" %}</option>
                     </select>
                 </div>
 
@@ -72,11 +70,11 @@
                     <div class="d-flex gap-2">
                         <button type="submit" class="btn btn-dark">
                             <i class="fas fa-search me-1"></i>
-                            Tìm kiếm
+                            {% trans "Search" %}
                         </button>
                         <a href="{% url 'pitch_list' %}" class="btn btn-outline-secondary">
                             <i class="fas fa-redo me-1"></i>
-                            Đặt lại
+                            {% trans "Reset" %}
                         </a>
                     </div>
                 </div>
@@ -85,11 +83,11 @@
             {% if has_filters %}
             <div class="mt-3 pt-3 border-top">
                 <div class="d-flex align-items-center flex-wrap">
-                    <span class="text-muted small me-2 mb-2">Bộ lọc đang áp dụng:</span>
+                    <span class="text-muted small me-2 mb-2">{% trans "Applied filters:" %}</span>
                     <div class="d-flex flex-wrap gap-2">
                         {% if request_get.q %}
                         <span class="badge bg-light text-dark border">
-                            Từ khóa: "{{ request_get.q }}"
+                            {% trans "Keyword:" %} "{{ request_get.q }}"
                             <a href="?{{ request_get|param_remove:'q' }}" class="text-muted ms-1">
                                 <i class="fas fa-times"></i>
                             </a>
@@ -100,7 +98,7 @@
                         {% for type in pitch_types %}
                         {% if request_get.pitch_type == type.id|stringformat:"i" %}
                         <span class="badge bg-light text-dark border">
-                            Loại: {{ type.name }}
+                            {% trans "Type:" %} {{ type.name }}
                             <a href="?{{ request_get|param_remove:'pitch_type' }}" class="text-muted ms-1">
                                 <i class="fas fa-times"></i>
                             </a>
@@ -111,7 +109,7 @@
 
                         {% if request_get.price_range %}
                         <span class="badge bg-light text-dark border">
-                            Giá: {{ request_get.price_range|price_range_display }}
+                            {% trans "Price:" %} {{ request_get.price_range }}
                             <a href="?{{ request_get|param_remove:'price_range' }}" class="text-muted ms-1">
                                 <i class="fas fa-times"></i>
                             </a>
@@ -127,36 +125,41 @@
     {% if pitches %}
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div class="text-muted small">
-            Tìm thấy <strong>{{ pitches.paginator.count }}</strong> sân phù hợp
+            {% trans "Found" %} <strong>{{ pitches.paginator.count }}</strong>
+            {% if pitches.paginator.count == 1 %}
+                {% trans "pitch" %}
+            {% else %}
+                {% trans "pitches" %}
+            {% endif %}
         </div>
         <div class="dropdown">
             <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
                 <i class="fas fa-sort me-1"></i>
-                {% if request_get.sort == 'name' %}Tên A-Z
-                {% elif request_get.sort == '-name' %}Tên Z-A
-                {% elif request_get.sort == 'price' %}Giá thấp đến cao
-                {% elif request_get.sort == '-price' %}Giá cao đến thấp
-                {% else %}Sắp xếp
+                {% if request_get.sort == 'name' %}{% trans "Name A-Z" %}
+                {% elif request_get.sort == '-name' %}{% trans "Name Z-A" %}
+                {% elif request_get.sort == 'price' %}{% trans "Price Low to High" %}
+                {% elif request_get.sort == '-price' %}{% trans "Price High to Low" %}
+                {% else %}{% trans "Sort" %}
                 {% endif %}
             </button>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item {% if request_get.sort == 'name' %}active{% endif %}"
-                        href="?{{ request_get|param_replace:'sort=name' }}">Tên A-Z</a></li>
+                        href="?{{ request_get|param_replace:'sort=name' }}">{% trans "Name A-Z" %}</a></li>
                 <li><a class="dropdown-item {% if request_get.sort == '-name' %}active{% endif %}"
-                        href="?{{ request_get|param_replace:'sort=-name' }}">Tên Z-A</a></li>
+                        href="?{{ request_get|param_replace:'sort=-name' }}">{% trans "Name Z-A" %}</a></li>
                 <li><a class="dropdown-item {% if request_get.sort == 'price' %}active{% endif %}"
-                        href="?{{ request_get|param_replace:'sort=price' }}">Giá thấp đến cao</a></li>
+                        href="?{{ request_get|param_replace:'sort=price' }}">{% trans "Price Low to High" %}</a></li>
                 <li><a class="dropdown-item {% if request_get.sort == '-price' %}active{% endif %}"
-                        href="?{{ request_get|param_replace:'sort=-price' }}">Giá cao đến thấp</a></li>
+                        href="?{{ request_get|param_replace:'sort=-price' }}">{% trans "Price High to Low" %}</a></li>
             </ul>
         </div>
     </div>
     {% endif %}
 
     {% if pitches %}
-    <div class="row g-3 mb-4">
+    <div class="row g-3 mb-4" id="pitches-container">
         {% for pitch in pitches %}
-        <div class="col-lg-4 col-md-6">
+        <div class="col-lg-4 col-md-6" data-pitch-id="{{ pitch.id }}">
             <div class="card border-0 h-100">
                 <div class="pitch-card-image-wrapper">
                     <div class="pitch-card-image">
@@ -169,14 +172,13 @@
                     </div>
 
                     {% if user.is_authenticated %}
-                    <form method="POST" action="{% url 'toggle_favorite' pitch.id %}" class="favorite-form-badge">
+                    <form method="POST" action="{% url 'toggle_favorite' pitch.id %}" 
+                          class="favorite-form-badge" data-pitch-id="{{ pitch.id }}">
                         {% csrf_token %}
-                        <button type="submit" class="favorite-badge-btn" title="Thêm vào yêu thích">
-                            {% if pitch.is_favorited %}
-                            <i class="fas fa-heart text-danger"></i>
-                            {% else %}
-                            <i class="far fa-heart text-danger"></i>
-                            {% endif %}
+                        <button type="submit" class="favorite-badge-btn" 
+                                data-favorited="{% if pitch.is_favorited %}true{% else %}false{% endif %}"
+                                title="{% trans 'Add to Favorites' %}">
+                            <i class="{% if pitch.is_favorited %}fas{% else %}far{% endif %} fa-heart"></i>
                         </button>
                     </form>
                     {% endif %}
@@ -206,25 +208,25 @@
                     {% endif %}
 
                     <div class="py-2 px-3 mb-3 price-display">
-                        <div class="text-muted price-label">Giá thuê</div>
+                        <div class="text-muted price-label">{% trans "Rental Price" %}</div>
                         <div class="price-value">
                             {{ pitch.base_price_per_hour|floatformat:0 }}đ
-                            <span class="price-unit">/giờ</span>
+                            <span class="price-unit">/{% trans "hour" %}</span>
                         </div>
                     </div>
 
                     <a href="{% url 'user_booking_create' pitch.id %}" class="btn btn-dark btn-sm w-100 mb-2">
                         <i class="fas fa-calendar-alt me-1"></i>
-                        Xem lịch & Đặt sân
+                        {% trans "View Schedule & Book" %}
                     </a>
 
                     {% if not user.is_authenticated %}
                     <div class="text-center mt-2 login-link">
                         <a href="{% url 'login' %}?next={% url 'user_booking_create' pitch.id %}"
                             class="text-decoration-none">
-                            Đăng nhập
+                            {% trans "Login" %}
                         </a>
-                        để đặt sân
+                        {% trans "to book" %}
                     </div>
                     {% endif %}
                 </div>
@@ -235,7 +237,7 @@
 
     {% if pitches.has_other_pages %}
     <div class="d-flex flex-column align-items-center py-4">
-        <nav aria-label="Điều hướng trang">
+        <nav aria-label="{% trans 'Page navigation' %}">
             <ul class="pagination mb-3">
                 {% if pitches.has_previous %}
                 <li class="page-item">
@@ -256,33 +258,39 @@
                 <li class="page-item active">
                     <span class="page-link">{{ num }}</span>
                 </li>
-                {% elif num > pitches.number|add:'-3' and num < pitches.number|add:'3' %} <li class="page-item">
+                {% elif num > pitches.number|add:'-3' and num < pitches.number|add:'3' %} 
+                <li class="page-item">
                     <a class="page-link" href="?page={{ num }}&{{ request_get|param_remove:'page' }}">{{ num }}</a>
-                    </li>
-                    {% endif %}
-                    {% endfor %}
+                </li>
+                {% endif %}
+                {% endfor %}
 
-                    {% if pitches.has_next %}
-                    <li class="page-item">
-                        <a class="page-link"
-                            href="?page={{ pitches.next_page_number }}&{{ request_get|param_remove:'page' }}">
-                            <i class="fas fa-angle-right"></i>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link"
-                            href="?page={{ pitches.paginator.num_pages }}&{{ request_get|param_remove:'page' }}">
-                            <i class="fas fa-angle-double-right"></i>
-                        </a>
-                    </li>
-                    {% endif %}
+                {% if pitches.has_next %}
+                <li class="page-item">
+                    <a class="page-link"
+                        href="?page={{ pitches.next_page_number }}&{{ request_get|param_remove:'page' }}">
+                        <i class="fas fa-angle-right"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link"
+                        href="?page={{ pitches.paginator.num_pages }}&{{ request_get|param_remove:'page' }}">
+                        <i class="fas fa-angle-double-right"></i>
+                    </a>
+                </li>
+                {% endif %}
             </ul>
         </nav>
 
         <div class="text-muted pagination-info">
-            Trang <strong>{{ pitches.number }}</strong> / <strong>{{ pitches.paginator.num_pages }}</strong>
+            {% trans "Page" %} <strong>{{ pitches.number }}</strong> / <strong>{{ pitches.paginator.num_pages }}</strong>
             <span class="mx-2">•</span>
-            Tổng <strong>{{ pitches.paginator.count }}</strong> sân
+            {% trans "Total" %} <strong>{{ pitches.paginator.count }}</strong>
+            {% if pitches.paginator.count == 1 %}
+                {% trans "pitch" %}
+            {% else %}
+                {% trans "pitches" %}
+            {% endif %}
         </div>
     </div>
     {% endif %}
@@ -290,13 +298,17 @@
     {% else %}
     <div class="text-center py-5">
         <i class="fas fa-futbol empty-state-icon text-muted mb-3"></i>
-        <h4 class="mb-2 empty-state-title">Không Tìm Thấy Sân Phù Hợp</h4>
-        <p class="text-muted mb-3">Không có sân bóng nào phù hợp với tiêu chí tìm kiếm của bạn</p>
+        <h4 class="mb-2 empty-state-title">{% trans "No Pitches Found" %}</h4>
+        <p class="text-muted mb-3">{% trans "No pitches match your search criteria" %}</p>
         <a href="{% url 'pitch_list' %}" class="btn btn-dark">
             <i class="fas fa-redo me-1"></i>
-            Xem tất cả sân
+            {% trans "View All Pitches" %}
         </a>
     </div>
     {% endif %}
 </div>
+
+{% block extra_js %}
+<script src="{% static 'js/favourite.js' %}"></script>
+{% endblock %}
 {% endblock %}
