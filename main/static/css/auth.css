@@ -1,0 +1,89 @@
+body {
+    background: #f7f9fb;
+}
+
+.auth-wrapper {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 12px;
+}
+
+.auth-card {
+    max-width: 480px;
+    width: 100%;
+}
+
+.auth-form .form-control {
+    padding: 12px 14px;
+}
+
+.divider {
+    position: relative;
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.divider span {
+    background: #fff;
+    padding: 0 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.divider::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    border-bottom: 1px solid #e5e7eb;
+    z-index: 0;
+}
+
+.social-login .auth-social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+    padding: 10px 12px;
+}
+
+.auth-icon {
+    display: inline-flex;
+    width: 28px;
+    height: 28px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.auth-icon.google {
+    background: #f1f5f9;
+    color: #db4437;
+}
+
+.auth-icon.facebook {
+    background: #e7f0ff;
+    color: #1877f2;
+}
+
+@media (max-width: 576px) {
+    .auth-wrapper {
+        padding: 16px 10px 32px;
+    }
+
+    .auth-card {
+        padding: 4px;
+    }
+
+    .auth-social-btn {
+        font-size: 0.95rem;
+    }
+}
+

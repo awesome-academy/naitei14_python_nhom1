@@ -99,3 +99,46 @@
     font-size: 4rem;
     color: #6c757d;
 }
+
+@media (max-width: 768px) {
+    .facility-image-wrapper {
+        height: 140px;
+    }
+
+    .section-header h2 {
+        font-size: 1.35rem;
+    }
+
+    .facility-card {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .search-bar .input-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-bar .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .facility-content {
+        padding: 12px;
+    }
+
+    .facility-title {
+        font-size: 0.95rem;
+    }
+
+    .facility-description,
+    .facility-address {
+        font-size: 0.82rem;
+    }
+
+    .pitch-item {
+        font-size: 0.78rem;
+        padding: 6px;
+    }
+}
