@@ -1,0 +1,551 @@
+# Vietnamese Translation
+# Copyright (C) 2025
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-15 19:12+0700\n"
+"PO-Revision-Date: 2025-12-15 19:15+0700\n"
+"Last-Translator: Vietnamese Team\n"
+"Language-Team: Vietnamese\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\main\templates\main\base.html:22
+msgid "Pitch Management"
+msgstr "Quản Lý Sân Bóng"
+
+#: .\main\templates\main\base.html:31
+msgid "Online Pitch Management"
+msgstr "Quản Lý Sân Bóng Trực Tuyến"
+
+#: .\main\templates\main\base.html:56 .\main\templates\main\home.html:6
+#: .\main\templates\user\facility_detail.html:16
+msgid "Home"
+msgstr "Trang Chủ"
+
+#: .\main\templates\main\base.html:62 .\main\templates\user\pitch_list.html:6
+#: .\main\templates\user\pitch_list.html:16
+msgid "Pitch List"
+msgstr "Danh Sách Sân"
+
+#: .\main\templates\main\base.html:124
+msgid "Admin"
+msgstr "Quản Trị"
+
+#: .\main\templates\main\base.html:132
+msgid "Bookings"
+msgstr "Đặt Sân"
+
+#: .\main\templates\main\base.html:137
+msgid "Manage Pitches"
+msgstr "Quản Lý Sân"
+
+#: .\main\templates\main\base.html:142
+msgid "Manage Vouchers"
+msgstr "Quản Lý Voucher"
+
+#: .\main\templates\main\base.html:158
+msgid "Hello"
+msgstr "Xin Chào"
+
+#: .\main\templates\main\base.html:166
+#: .\main\templates\user\booking_list.html:4
+#: .\main\templates\user\booking_list.html:7
+msgid "Booking History"
+msgstr "Lịch Sử Đặt Sân"
+
+#: .\main\templates\main\base.html:171
+msgid "Favorite Pitches"
+msgstr "Sân Yêu Thích"
+
+#: .\main\templates\main\base.html:179
+msgid "Update Account"
+msgstr "Cập Nhật Tài Khoản"
+
+#: .\main\templates\main\base.html:186
+msgid "Logout"
+msgstr "Đăng Xuất"
+
+#: .\main\templates\main\base.html:196
+#: .\main\templates\registration\sign-up.html:5
+#: .\main\templates\registration\sign-up.html:27
+msgid "Sign Up"
+msgstr "Đăng Ký"
+
+#: .\main\templates\main\base.html:203
+#: .\main\templates\registration\login.html:5
+#: .\main\templates\registration\login.html:13
+#: .\main\templates\registration\login.html:27
+#: .\main\templates\user\pitch_list.html:227
+msgid "Login"
+msgstr "Đăng Nhập"
+
+#: .\main\templates\main\home.html:19
+msgid "Search facility by name..."
+msgstr "Tìm kiếm cơ sở..."
+
+#: .\main\templates\main\home.html:28
+msgid "Facility List"
+msgstr "Danh Sách Cơ Sở"
+
+#: .\main\templates\main\home.html:60
+msgid "Pitches"
+msgstr "Sân"
+
+#: .\main\templates\main\home.html:84
+msgid "No facilities found"
+msgstr "Không tìm thấy cơ sở"
+
+#: .\main\templates\registration\login.html:31
+msgid "Don't have an account?"
+msgstr "Chưa có tài khoản?"
+
+#: .\main\templates\registration\login.html:32
+msgid "Create one here"
+msgstr "Tạo tại đây"
+
+#: .\main\templates\registration\sign-up.html:13
+msgid "Create New Account"
+msgstr "Tạo Tài Khoản Mới"
+
+#: .\main\templates\registration\sign-up.html:31
+msgid "Already have an account?"
+msgstr "Đã có tài khoản?"
+
+#: .\main\templates\registration\sign-up.html:32
+msgid "Login here"
+msgstr "Đăng nhập tại đây"
+
+#: .\main\templates\user\booking_list.html:13
+msgid "All"
+msgstr "Tất Cả"
+
+#: .\main\templates\user\booking_list.html:30
+msgid "User"
+msgstr "Người Dùng"
+
+#: .\main\templates\user\booking_list.html:32
+msgid "Pitch"
+msgstr "Sân"
+
+#: .\main\templates\user\booking_list.html:33
+msgid "Date"
+msgstr "Ngày"
+
+#: .\main\templates\user\booking_list.html:34
+msgid "Time Slot"
+msgstr "Khung Giờ"
+
+#: .\main\templates\user\booking_list.html:35
+msgid "Duration"
+msgstr "Thời Lượng"
+
+#: .\main\templates\user\booking_list.html:36
+msgid "Price"
+msgstr "Giá"
+
+#: .\main\templates\user\booking_list.html:37
+msgid "Status"
+msgstr "Trạng Thái"
+
+#: .\main\templates\user\booking_list.html:38
+msgid "Actions"
+msgstr "Hành Động"
+
+#: .\main\templates\user\pitch_list.html:17
+msgid "Choose a pitch and book now"
+msgstr "Chọn sân và đặt ngay"
+
+#: .\main\templates\user\pitch_list.html:23
+msgid "Search Pitches"
+msgstr "Tìm Kiếm Sân"
+
+#: .\main\templates\user\pitch_list.html:28
+msgid "Search by keyword"
+msgstr "Tìm kiếm theo từ khóa"
+
+#: .\main\templates\user\pitch_list.html:34
+msgid "Pitch name, facility, address..."
+msgstr "Tên sân, cơ sở, địa chỉ..."
+
+
+#: .\main\templates\user\pitch_list.html:41
+msgid "All Types"
+msgstr "Tất Cả Loại"
+
+#: .\main\templates\user\pitch_list.html:51
+msgid "Price Range"
+msgstr "Khoảng Giá"
+
+#: .\main\templates\user\pitch_list.html:53
+msgid "All Prices"
+msgstr "Tất Cả Giá"
+
+#: .\main\templates\user\pitch_list.html:55
+msgid "Under 100,000đ/hour"
+msgstr "Dưới 100.000đ/giờ"
+
+#: .\main\templates\user\pitch_list.html:57
+msgid "100,000đ - 200,000đ/hour"
+msgstr "100.000đ - 200.000đ/giờ"
+
+#: .\main\templates\user\pitch_list.html:59
+msgid "200,000đ - 300,000đ/hour"
+msgstr "200.000đ - 300.000đ/giờ"
+
+#: .\main\templates\user\pitch_list.html:61
+msgid "Over 300,000đ/hour"
+msgstr "Trên 300.000đ/giờ"
+
+#: .\main\templates\user\pitch_list.html:73
+msgid "Search"
+msgstr "Tìm Kiếm"
+
+#: .\main\templates\user\pitch_list.html:77
+msgid "Reset"
+msgstr "Đặt Lại"
+
+#: .\main\templates\user\pitch_list.html:86
+msgid "Applied filters:"
+msgstr "Bộ lọc đã áp dụng:"
+
+#: .\main\templates\user\pitch_list.html:90
+msgid "Keyword:"
+msgstr "Từ khóa:"
+
+#: .\main\templates\user\pitch_list.html:101
+msgid "Type:"
+msgstr "Loại:"
+
+#: .\main\templates\user\pitch_list.html:112
+msgid "Price:"
+msgstr "Giá:"
+
+#: .\main\templates\user\pitch_list.html:128
+msgid "Found"
+msgstr "Tìm thấy"
+
+#: .\main\templates\user\pitch_list.html:130
+msgid "pitch"
+msgstr "sân"
+
+#: .\main\templates\user\pitch_list.html:132
+msgid "pitches"
+msgstr "sân"
+
+#: .\main\templates\user\pitch_list.html:138
+msgid "Name A-Z"
+msgstr "Tên A-Z"
+
+#: .\main\templates\user\pitch_list.html:139
+msgid "Name Z-A"
+msgstr "Tên Z-A"
+
+#: .\main\templates\user\pitch_list.html:140
+msgid "Price Low to High"
+msgstr "Giá Thấp Đến Cao"
+
+#: .\main\templates\user\pitch_list.html:141
+msgid "Price High to Low"
+msgstr "Giá Cao Đến Thấp"
+
+#: .\main\templates\user\pitch_list.html:142
+msgid "Sort"
+msgstr "Sắp Xếp"
+
+#: .\main\templates\user\pitch_list.html:180
+msgid "Add to Favorites"
+msgstr "Thêm Vào Yêu Thích"
+
+#: .\main\templates\user\pitch_list.html:211
+msgid "Rental Price"
+msgstr "Giá Thuê"
+
+#: .\main\templates\user\pitch_list.html:214
+msgid "hour"
+msgstr "giờ"
+
+#: .\main\templates\user\pitch_list.html:220
+msgid "View Schedule & Book"
+msgstr "Xem Lịch & Đặt Sân"
+
+#: .\main\templates\user\pitch_list.html:229
+msgid "to book"
+msgstr "để đặt sân"
+
+#: .\main\templates\user\pitch_list.html:240
+msgid "Page navigation"
+msgstr "Điều hướng trang"
+
+#: .\main\templates\user\pitch_list.html:286
+msgid "Page"
+msgstr "Trang"
+
+#: .\main\templates\user\pitch_list.html:288
+msgid "Total"
+msgstr "Tổng"
+
+#: .\main\templates\user\pitch_list.html:301
+msgid "No Pitches Found"
+msgstr "Không Tìm Thấy Sân"
+
+#: .\main\templates\user\pitch_list.html:302
+msgid "No pitches match your search criteria"
+msgstr "Không có sân phù hợp với tiêu chí tìm kiếm"
+
+#: .\main\templates\user\pitch_list.html:305
+msgid "View All Pitches"
+msgstr "Xem Tất Cả Sân"
+
+#: .\main\templates\user\facility_detail.html:62
+msgid "Pitches List"
+msgstr "Danh Sách Sân"
+
+#: .\main\templates\user\facility_detail.html:88
+msgid "Available"
+msgstr "Còn Trống"
+
+#: .\main\templates\user\facility_detail.html:90
+msgid "Not Available"
+msgstr "Không Có Sẵn"
+
+#: .\main\templates\user\facility_detail.html:102
+msgid "Book Now"
+msgstr "Đặt Ngay"
+
+#: .\main\templates\user\facility_detail.html:112
+msgid "This facility currently has no pitches"
+msgstr "Cơ sở này hiện không có sân"
+
+#: .\main\templates\user\booking_list.html:92
+msgid "Previous"
+msgstr "Trước"
+
+#: .\main\templates\user\booking_list.html:109
+msgid "Next"
+msgstr "Tiếp"
+
+#: .\main\templates\user\booking_list.html:118
+msgid "You have no bookings yet."
+msgstr "Bạn chưa có đặt sân nào."
+
+#: .\main\templates\user\booking_list.html:119
+msgid "Book a pitch now"
+msgstr "Đặt sân ngay"
+
+#: .\main\templates\user\booking_detail.html:3
+msgid "Booking Details"
+msgstr "Chi Tiết Đặt Sân"
+
+#: .\main\templates\user\booking_detail.html:25
+msgid "Customer Information"
+msgstr "Thông Tin Khách Hàng"
+
+#: .\main\templates\user\booking_detail.html:28
+msgid "Username"
+msgstr "Tên Đăng Nhập"
+
+#: .\main\templates\user\booking_detail.html:32
+msgid "Email"
+msgstr "Email"
+
+#: .\main\templates\user\booking_detail.html:36
+msgid "Phone Number"
+msgstr "Số Điện Thoại"
+
+#: .\main\templates\user\booking_detail.html:42
+msgid "Pitch Information"
+msgstr "Thông Tin Sân"
+
+#: .\main\templates\user\booking_detail.html:45
+msgid "Pitch Name"
+msgstr "Tên Sân"
+
+#: .\main\templates\user\booking_detail.html:49
+msgid "Pitch Type"
+msgstr "Loại Sân"
+
+#: .\main\templates\user\booking_detail.html:53
+msgid "Base Price"
+msgstr "Giá Cơ Bản"
+
+#: .\main\templates\user\booking_detail.html:57
+msgid "Booking Information"
+msgstr "Thông Tin Đặt Sân"
+
+#: .\main\templates\user\booking_detail.html:60
+msgid "Booking Date"
+msgstr "Ngày Đặt"
+
+#: .\main\templates\user\booking_detail.html:64
+msgid "hours"
+msgstr "giờ"
+
+#: .\main\templates\user\booking_detail.html:70
+msgid "Time Slot Price"
+msgstr "Giá Khung Giờ"
+
+#: .\main\templates\user\booking_detail.html:74
+msgid "Discount Code"
+msgstr "Mã Giảm Giá"
+
+#: .\main\templates\user\booking_detail.html:80
+msgid "Total Price"
+msgstr "Tổng Giá"
+
+#: .\main\templates\user\booking_detail.html:83
+msgid "Note"
+msgstr "Ghi Chú"
+
+#: .\main\templates\user\booking_detail.html:88
+msgid "Created At"
+msgstr "Tạo Lúc"
+
+#: .\main\templates\user\booking_detail.html:94
+msgid "Back"
+msgstr "Quay Lại"
+
+#: .\main\templates\user\booking_detail.html:96
+msgid "Cancel Booking"
+msgstr "Hủy Đặt Sân"
+
+#: .\main\templates\user\booking_cancel.html:14
+msgid "Are you sure you want to cancel this booking?"
+msgstr "Bạn có chắc chắn muốn hủy đặt sân này không?"
+
+#: .\main\templates\user\booking_cancel.html:26
+msgid "Confirm Cancel"
+msgstr "Xác Nhận Hủy"
+
+
+#: .\main\templates\user\booking_create.html:24
+msgid "Step 1: Select Booking Date"
+msgstr "Bước 1: Chọn Ngày Đặt"
+
+#: .\main\templates\user\booking_create.html:35
+msgid "Step 2: Select Time Slot"
+msgstr "Bước 2: Chọn Khung Giờ"
+
+#: .\main\templates\user\booking_create.html:42
+msgid "No available time slots for this date"
+msgstr "Không có khung giờ nào khả dụng cho ngày này"
+
+#: .\main\templates\user\booking_create.html:52
+msgid "Step 3: Discount Code (Optional)"
+msgstr "Bước 3: Mã Giảm Giá (Tùy Chọn)"
+
+#: .\main\templates\user\booking_create.html:56
+msgid "Enter discount code"
+msgstr "Nhập mã giảm giá"
+
+#: .\main\templates\user\booking_create.html:61
+msgid "Check"
+msgstr "Kiểm Tra"
+
+#: .\main\templates\user\booking_create.html:67
+msgid "Step 4: Note (Optional)"
+msgstr "Bước 4: Ghi Chú (Tùy Chọn)"
+
+#: .\main\templates\user\booking_create.html:71
+msgid "Example: Need ball, arrive 15 minutes early..."
+msgstr "Ví dụ: Cần bóng, tới 15 phút sớm..."
+
+#: .\main\templates\user\booking_create.html:78
+msgid "Please select a date above to see available time slots"
+msgstr "Vui lòng chọn ngày trên để xem các khung giờ khả dụng"
+
+#: .\main\templates\user\booking_create.html:90
+msgid "Booking Instructions"
+msgstr "Hướng Dẫn Đặt Sân"
+
+#: .\main\templates\user\booking_create.html:93
+msgid "Select booking date"
+msgstr "Chọn ngày đặt sân"
+
+#: .\main\templates\user\booking_create.html:94
+msgid "Select available time slot (green)"
+msgstr "Chọn khung giờ khả dụng (xanh)"
+
+#: .\main\templates\user\booking_create.html:95
+msgid "Enter discount code if you have one"
+msgstr "Nhập mã giảm giá nếu có"
+
+#: .\main\templates\user\booking_create.html:96
+msgid "Add note if needed"
+msgstr "Thêm ghi chú nếu cần"
+
+#: .\main\templates\user\booking_create.html:97
+msgid "Click Confirm Booking"
+msgstr "Nhấp Xác Nhận Đặt Sân"
+
+#: .\main\templates\user\booking_create.html:104
+msgid "Important Notes"
+msgstr "Ghi Chú Quan Trọng"
+
+#: .\main\templates\user\booking_create.html:107
+msgid "Book at least 1 day in advance"
+msgstr "Đặt sân ít nhất 1 ngày trước"
+
+#: .\main\templates\user\booking_create.html:111
+msgid "Pay when you arrive"
+msgstr "Thanh toán khi bạn tới"
+
+#: .\main\templates\user\booking_create.html:115
+msgid "Free cancellation before 24 hours"
+msgstr "Hủy miễn phí trước 24 giờ"
+
+#: .\main\templates\user\booking_create.html:119
+msgid "Hotline: 0123-456-789"
+msgstr "Đường Dây Nóng: 0123-456-789"
+
+#: .\main\templates\user\book_pitch.html:11
+msgid "Book Pitch"
+msgstr "Đặt Sân"
+
+#: .\main\templates\user\book_pitch.html:43
+msgid "Pitch Type Information"
+msgstr "Thông Tin Loại Sân"
+
+#: .\main\templates\user\book_pitch.html:52
+msgid "Schedule"
+msgstr "Lịch Trình"
+
+#: .\main\templates\user\book_pitch.html:58
+msgid "Select Booking Date"
+msgstr "Chọn Ngày Đặt"
+
+#: .\main\templates\user\book_pitch.html:60
+msgid "Select the date you want to book (from today onwards)"
+msgstr "Chọn ngày bạn muốn đặt (từ hôm nay trở đi)"
+
+#: .\main\templates\user\book_pitch.html:63
+msgid "View Available Time Slots"
+msgstr "Xem Khung Giờ Khả Dụng"
+
+#: .\main\templates\user\book_pitch.html:70
+msgid "Select Time Slot"
+msgstr "Chọn Khung Giờ"
+
+#: .\main\templates\user\book_pitch.html:87
+msgid "No available time slots for this date. Please choose another date."
+msgstr "Không có khung giờ khả dụng cho ngày này. Vui lòng chọn ngày khác."
+
+#: .\main\templates\user\book_pitch.html:93
+msgid "Discount Code (if you have)"
+msgstr "Mã Giảm Giá (Nếu Có)"
+
+#: .\main\templates\user\book_pitch.html:104
+msgid "Additional Note"
+msgstr "Ghi Chú Thêm"
+
+#: .\main\templates\user\book_pitch.html:105
+msgid "Enter your note..."
+msgstr "Nhập ghi chú của bạn..."
+
+#: .\main\templates\user\book_pitch.html:110
+msgid "Confirm Booking"
+msgstr "Xác Nhận Đặt Sân"

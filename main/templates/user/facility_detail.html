@@ -1,5 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}{{ facility.name }}{% endblock %}
 
@@ -12,7 +13,7 @@
     <nav aria-label="breadcrumb" class="mb-4">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="{% url 'home' %}" class="text-decoration-none">Trang chủ</a>
+                <a href="{% url 'home' %}" class="text-decoration-none">{% trans "Home" %}</a>
             </li>
             <li class="breadcrumb-item active">{{ facility.name }}</li>
         </ol>
@@ -35,13 +36,15 @@
 
                 <div class="mb-3 facility-info">
                     <p class="mb-2">
-                        <i class="fas fa-map-marker-alt text-secondary me-2"></i>
                         {{ facility.address }}
                     </p>
 
                     <p class="mb-2">
-                        <i class="fas fa-futbol text-secondary me-2"></i>
-                        {{ pitches.count }} sân
+                        {% blocktrans count counter=pitches.count %}
+                            {{ counter }} pitch
+                        {% plural %}
+                            {{ counter }} pitches
+                        {% endblocktrans %}
                     </p>
                 </div>
 
@@ -56,7 +59,7 @@
         </div>
     </div>
 
-    <h2 class="mb-3 section-title">Danh Sách Sân</h2>
+    <h2 class="mb-3 section-title">{% trans "Pitches List" %}</h2>
 
     {% if pitches %}
     <div class="row g-3">
@@ -82,40 +85,22 @@
                     {% endif %}
 
                     {% if pitch.is_available %}
-                    <span class="badge bg-success pitch-badge">Có sẵn</span>
+                    <span class="badge bg-success pitch-badge">{% trans "Available" %}</span>
                     {% else %}
-                    <span class="badge bg-secondary pitch-badge">Không có sẵn</span>
+                    <span class="badge bg-secondary pitch-badge">{% trans "Not Available" %}</span>
                     {% endif %}
                 </div>
 
                 <div class="card-body">
-                    <h5 class="card-title mb-2 pitch-title">{{ pitch.name }}</h5>
-
-                    <p class="text-muted mb-2 pitch-type">
-                        <i class="fas fa-tag me-1"></i>
-                        {{ pitch.pitch_type.name }}
+                    <h5 class="card-title">{{ pitch.name }}</h5>
+                    <p class="card-text text-muted">{{ pitch.pitch_type.name }}</p>
+                    <p class="card-text">
+                        <strong>{{ pitch.base_price_per_hour|floatformat:0 }}đ</strong>
+                        <span class="text-muted">/{% trans "hour" %}</span>
                     </p>
-
-                    <p class="mb-3 pitch-price">
-                        {{ pitch.base_price_per_hour|floatformat:0 }}đ
-                        <span class="pitch-price-unit">/giờ</span>
-                    </p>
-
-                    {% if user.is_authenticated and is_user %}
-                    {% if pitch.is_available %}
-                    <a href="{% url 'user_booking_create' pitch.id %}" class="btn btn-dark btn-sm w-100">
-                        Đặt Sân
+                    <a href="{% url 'user_booking_create' pitch.id %}" class="btn btn-primary btn-sm">
+                        {% trans "Book Now" %}
                     </a>
-                    {% else %}
-                    <button class="btn btn-secondary btn-sm w-100" disabled>
-                        Không Thể Đặt
-                    </button>
-                    {% endif %}
-                    {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-outline-dark btn-sm w-100">
-                        Đăng Nhập Để Đặt
-                    </a>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -124,7 +109,7 @@
     {% else %}
     <div class="text-center py-5 bg-white rounded empty-state">
         <i class="fas fa-futbol fa-3x text-muted mb-3"></i>
-        <p class="text-muted mb-0">Hiện tại cơ sở này chưa có sân nào</p>
+        <p class="text-muted mb-0">{% trans "This facility currently has no pitches" %}</p>
     </div>
     {% endif %}
 </div>

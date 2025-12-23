@@ -1,13 +1,14 @@
 {% extends 'main/base.html' %}
+{% load i18n %}
 
-{% block title %}Chi tiết đặt sân #{{ booking.id }}{% endblock %}
+{% block title %}{% trans "Booking Details" %} #{{ booking.id }}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-8 mx-auto">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h3>Chi tiết đặt sân #{{ booking.id }}</h3>
+                <h3>{% trans "Booking Details" %} #{{ booking.id }}</h3>
                 {% if booking.status == 'Pending' %}
                     <span class="badge bg-warning">{{ booking.get_status_display }}</span>
                 {% elif booking.status == 'Confirmed' %}
@@ -21,66 +22,66 @@
             <div class="card-body">
                 <!-- User Info (Admin only) -->
                 {% if is_admin %}
-                <h5>Thông tin khách hàng</h5>
+                <h5>{% trans "Customer Information" %}</h5>
                 <table class="table">
                     <tr>
-                        <th width="30%">Tên người dùng:</th>
+                        <th width="30%">{% trans "Username" %}:</th>
                         <td>{{ booking.user.username }}</td>
                     </tr>
                     <tr>
-                        <th>Email:</th>
+                        <th>{% trans "Email" %}:</th>
                         <td>{{ booking.user.email }}</td>
                     </tr>
                     <tr>
-                        <th>Số điện thoại:</th>
-                        <td>{{ booking.user.phone_number|default:"Chưa cập nhật" }}</td>
+                        <th>{% trans "Phone Number" %}:</th>
+                        <td>{{ booking.user.phone_number|default:"Not updated" }}</td>
                     </tr>
                 </table>
                 <hr>
                 {% endif %}
                 
-                <h5>Thông tin sân</h5>
+                <h5>{% trans "Pitch Information" %}</h5>
                 <table class="table">
                     <tr>
-                        <th width="30%">Tên sân:</th>
+                        <th width="30%">{% trans "Pitch Name" %}:</th>
                         <td>{{ booking.pitch.name }}</td>
                     </tr>
                     <tr>
-                        <th>Loại sân:</th>
+                        <th>{% trans "Pitch Type" %}:</th>
                         <td>{{ booking.pitch.pitch_type.name }}</td>
                     </tr>
                     <tr>
-                        <th>Giá gốc:</th>
-                        <td>{{ booking.pitch.base_price_per_hour|floatformat:0 }}đ/giờ</td>
+                        <th>{% trans "Base Price" %}:</th>
+                        <td>{{ booking.pitch.base_price_per_hour|floatformat:0 }}đ/{% trans "hour" %}</td>
                     </tr>
                 </table>
                 
                 <hr>
                 
-                <h5>Thông tin đặt sân</h5>
+                <h5>{% trans "Booking Information" %}</h5>
                 <table class="table">
                     <tr>
-                        <th width="30%">Ngày đặt:</th>
+                        <th width="30%">{% trans "Booking Date" %}:</th>
                         <td>{{ booking.booking_date|date:"l, d/m/Y" }}</td>
                     </tr>
                     <tr>
-                        <th>Khung giờ:</th>
+                        <th>{% trans "Time Slot" %}:</th>
                         <td>
                             <strong>{{ booking.time_slot.time_slot.name }}</strong><br>
                             <small class="text-muted">
                                 {{ booking.time_slot.time_slot.start_time|time:"H:i" }} - 
                                 {{ booking.time_slot.time_slot.end_time|time:"H:i" }}
-                                ({{ booking.duration_hours }} giờ)
+                                ({{ booking.duration_hours }} {% trans "hours" %})
                             </small>
                         </td>
                     </tr>
                     <tr>
-                        <th>Giá khung giờ:</th>
+                        <th>{% trans "Time Slot Price" %}:</th>
                         <td>{{ booking.time_slot.get_price|floatformat:0 }}đ</td>
                     </tr>
                     {% if booking.voucher %}
                     <tr>
-                        <th>Mã giảm giá:</th>
+                        <th>{% trans "Discount Code" %}:</th>
                         <td>
                             <span class="badge bg-success">{{ booking.voucher.code }}</span>
                             -{{ booking.voucher.discount_percent }}%
@@ -88,34 +89,30 @@
                     </tr>
                     {% endif %}
                     <tr>
-                        <th>Tổng tiền:</th>
+                        <th>{% trans "Total Price" %}:</th>
                         <td><h4 class="text-success mb-0">{{ booking.final_price|floatformat:0 }}đ</h4></td>
                     </tr>
                     {% if booking.note %}
                     <tr>
-                        <th>Ghi chú:</th>
+                        <th>{% trans "Note" %}:</th>
                         <td>{{ booking.note }}</td>
                     </tr>
                     {% endif %}
                     <tr>
-                        <th>Đặt lúc:</th>
+                        <th>{% trans "Created At" %}:</th>
                         <td>{{ booking.created_at|date:"d/m/Y H:i" }}</td>
                     </tr>
                 </table>
                 
                 <div class="mt-4">
                     <a href="{% url 'user_booking_list' %}" class="btn btn-secondary">
-                        <i class="fas fa-arrow-left"></i> Quay lại
+                        <i class="fas fa-arrow-left"></i> {% trans "Back" %}
                     </a>
                     
                     {% if booking.user == user and booking.status == 'Pending' %}
                         <a href="{% url 'user_booking_cancel' booking.id %}" class="btn btn-danger">
-                            <i class="fas fa-times"></i> Hủy đặt sân
+                            <i class="fas fa-times"></i> {% trans "Cancel Booking" %}
                         </a>
-                    {% endif %}
-                    
-                    {% if is_admin and booking.status == 'Pending' %}
-                        <!-- Admin actions could be added here -->
                     {% endif %}
                 </div>
             </div>

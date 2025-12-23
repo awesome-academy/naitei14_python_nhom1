@@ -5,6 +5,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/pitch_list.css' %}">
+<link rel="stylesheet" href="{% static 'css/favourite.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -17,18 +18,20 @@
     </div>
 
     {% if favorites %}
-        <div class="row g-3 mb-4">
+        <div class="row g-3 mb-4" id="favorites-container">
             {% for favorite in favorites %}
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 favorite-card" data-favorite-id="{{ favorite.id }}" data-pitch-id="{{ favorite.pitch.id }}">
                     <div class="card border-0 h-100">
-                        <div class="pitch-card-image">
-                            {% if favorite.pitch.images and favorite.pitch.images|length > 0 %}
-                                <img src="{{ favorite.pitch.images.0 }}" class="card-img-top" alt="{{ favorite.pitch.name }}"
-                                     onerror="this.src='{{ default_pitch_image }}'">
-                            {% else %}
-                                <img src="{{ default_pitch_image }}" 
-                                     class="card-img-top" alt="{{ favorite.pitch.name }}">
-                            {% endif %}
+                        <div class="pitch-card-image-wrapper">
+                            <div class="pitch-card-image">
+                                {% if favorite.pitch.images and favorite.pitch.images|length > 0 %}
+                                    <img src="{{ favorite.pitch.images.0 }}" class="card-img-top" alt="{{ favorite.pitch.name }}"
+                                         onerror="this.src='{{ default_pitch_image }}'">
+                                {% else %}
+                                    <img src="{{ default_pitch_image }}" 
+                                         class="card-img-top" alt="{{ favorite.pitch.name }}">
+                                {% endif %}
+                            </div>
                             
                             {% if favorite.pitch.is_available %}
                                 <span class="badge bg-success pitch-badge">Còn trống</span>
@@ -69,13 +72,14 @@
                             </div>
 
                             <div class="d-grid gap-2">
-                                <a href="{% url 'book_pitch' favorite.pitch.id %}" class="btn btn-dark btn-sm">
+                                <a href="{% url 'user_booking_create' favorite.pitch.id %}" class="btn btn-dark btn-sm">
                                     <i class="fas fa-calendar-alt me-1"></i>
                                     Xem lịch & Đặt sân
                                 </a>
-                                <form method="POST" action="{% url 'toggle_favorite' favorite.pitch.id %}">
+                                <form method="POST" action="{% url 'toggle_favorite' favorite.pitch.id %}" 
+                                      class="remove-favorite-form" data-pitch-id="{{ favorite.pitch.id }}">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm w-100 favorite-btn-remove">
                                         <i class="fas fa-trash me-1"></i>
                                         Xóa khỏi yêu thích
                                     </button>
@@ -87,8 +91,8 @@
             {% endfor %}
         </div>
     {% else %}
-        <div class="text-center py-5">
-            <i class="fas fa-heart empty-state-icon text-muted mb-3" style="font-size: 3rem;"></i>
+        <div class="text-center py-5" id="empty-state">
+            <i class="fas fa-heart empty-state-icon text-danger mb-3"></i>
             <h4 class="mb-2 empty-state-title">Chưa có sân yêu thích</h4>
             <p class="text-muted mb-3">Hãy khám phá và thêm các sân bóng vào danh sách yêu thích của bạn</p>
             <a href="{% url 'pitch_list' %}" class="btn btn-dark">
@@ -98,4 +102,13 @@
         </div>
     {% endif %}
 </div>
+
+{% block extra_js %}
+<script src="{% static 'js/favourite.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    initializeFavorites('remove');
+});
+</script>
+{% endblock %}
 {% endblock %}

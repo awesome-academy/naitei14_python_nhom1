@@ -1511,13 +1511,15 @@ def toggle_favorite(request, pitch_id):
     else:
         is_favorited = True
 
-    if 'application/json' in request.headers.get('Accept', ''):
+    # Trả về JSON cho AJAX request
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return JsonResponse({
             'success': True,
             'is_favorited': is_favorited,
             'message': 'Đã thêm vào yêu thích' if is_favorited else 'Đã xóa khỏi yêu thích'
         })
 
+    # Fallback cho form submission thường
     return redirect('pitch_list')
 
 
