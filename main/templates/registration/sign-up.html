@@ -1,8 +1,8 @@
 {% extends "main/base.html" %} 
-
-{% block title %}Đăng ký{% endblock %} 
-
+{% load i18n %}
 {% load crispy_forms_tags %} 
+
+{% block title %}{% trans "Sign Up" %}{% endblock %} 
 
 {% block content %} 
 <div class="container py-5">
@@ -10,7 +10,7 @@
     <div class="col-md-6 col-lg-5">
       <div class="card shadow-sm border-0"> 
         <div class="card-body p-5"> 
-          <h3 class="card-title mb-4 text-center">Tạo tài khoản mới</h3> 
+          <h3 class="card-title mb-4 text-center">{% trans "Create New Account" %}</h3> 
           
           {% if messages %} 
             {% for message in messages %} 
@@ -24,28 +24,12 @@
           <form method="post" novalidate> 
             {% csrf_token %} 
             {{ form|crispy }} 
-            
-            <div class="alert alert-info mt-4" role="alert"> 
-              <strong>Yêu cầu mật khẩu:</strong> 
-              <ul class="mb-0 mt-2 ps-3"> 
-                <li>Ít nhất <strong>8 ký tự</strong></li> 
-                <li>Chứa ít nhất <strong>3 loại</strong> từ các nhóm sau: 
-                  <ul class="mt-2"> 
-                    <li>Chữ thường (a-z)</li> 
-                    <li>Chữ hoa (A-Z)</li> 
-                    <li>Số (0-9)</li> 
-                    <li>Ký tự đặc biệt (!@#$%^&* vv...)</li> 
-                  </ul> 
-                </li> 
-              </ul> 
-            </div> 
-            
-            <button type="submit" class="btn btn-primary mt-4 w-100 btn-lg">Đăng ký</button> 
+            <button type="submit" class="btn btn-primary mt-4 w-100 btn-lg">{% trans "Sign Up" %}</button> 
           </form> 
           
           <p class="mt-4 text-center text-muted"> 
-            Đã có tài khoản? 
-            <a href="{% url 'login' %}" class="text-decoration-none">Đăng nhập ngay</a> 
+            {% trans "Already have an account?" %} 
+            <a href="{% url 'login' %}" class="text-decoration-none">{% trans "Login here" %}</a> 
           </p> 
         </div> 
       </div>

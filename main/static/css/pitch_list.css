@@ -1,16 +1,21 @@
+/* ============= PAGE HEADER ============= */
 .page-header h1 {
     font-size: 1.75rem;
     font-weight: 500;
+    color: #212529;
 }
 
 .page-subtitle {
     font-size: 0.9rem;
+    color: #6c757d;
 }
 
+/* ============= CARD STYLES ============= */
 .card {
     background: #fff;
     box-shadow: 0 1px 3px rgba(0,0,0,0.08);
     transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e9ecef !important;
 }
 
 .card:hover {
@@ -18,24 +23,56 @@
     box-shadow: 0 4px 12px rgba(0,0,0,0.12);
 }
 
+/* ============= SEARCH SECTION ============= */
 .search-section-title {
     font-size: 1.1rem;
     font-weight: 500;
+    color: #212529;
 }
 
 .form-label-small {
     font-size: 0.875rem;
+    font-weight: 500;
 }
 
+.input-group-text {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+.input-group .form-control {
+    border-color: #dee2e6;
+}
+
+.input-group .form-control:focus {
+    border-color: #212529;
+    box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.15);
+}
+
+.form-select {
+    border-color: #dee2e6;
+}
+
+.form-select:focus {
+    border-color: #212529;
+    box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.15);
+}
+
+/* ============= BUTTON STYLES ============= */
 .btn-dark {
     background-color: #212529;
     border-color: #212529;
     transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 .btn-dark:hover {
     background-color: #000;
     border-color: #000;
+}
+
+.btn-outline-secondary {
+    transition: all 0.3s ease;
 }
 
 .btn-outline-secondary:hover {
@@ -44,12 +81,56 @@
     color: #fff;
 }
 
+.btn-outline-danger {
+    transition: all 0.3s ease;
+}
+
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+}
+
+/* ============= FILTERS ============= */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.badge a {
+    cursor: pointer;
+    font-size: 0.7rem;
+    transition: color 0.2s ease;
+    text-decoration: none;
+    margin-left: 0.5rem;
+}
+
+.badge a:hover {
+    color: #dc3545 !important;
+}
+
+/* ============= DROPDOWN ============= */
+.dropdown-item.active {
+    background-color: #212529;
+    border-color: #212529;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* ============= PAGINATION ============= */
+.pagination {
+    gap: 0.25rem;
+}
+
 .pagination .page-link {
     color: #212529;
     border: 1px solid #dee2e6;
     padding: 0.5rem 0.75rem;
-    margin: 0 2px;
     transition: all 0.2s ease;
+    font-weight: 500;
 }
 
 .pagination .page-link:hover {
@@ -61,102 +142,117 @@
 .pagination .page-item.active .page-link {
     background-color: #212529;
     border-color: #212529;
+    color: #fff;
 }
 
 .pagination .page-link:focus {
     box-shadow: none;
 }
 
-.input-group-text {
+.pagination-info {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* ============= PITCH CARD IMAGE ============= */
+.pitch-card-image-wrapper {
+    position: relative;
+    overflow: hidden;
     background-color: #f8f9fa;
-}
-
-.input-group .form-control:focus {
-    border-color: #212529;
-    box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.25);
-}
-
-.dropdown-item.active {
-    background-color: #212529;
-    border-color: #212529;
-}
-
-.dropdown-item:hover {
-    background-color: #f8f9fa;
-}
-
-.badge .fas.fa-times {
-    cursor: pointer;
-    font-size: 0.7rem;
-    transition: color 0.2s ease;
-}
-
-.badge .fas.fa-times:hover {
-    color: #dc3545 !important;
-}
-
-.form-select:focus {
-    border-color: #212529;
-    box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.25);
 }
 
 .pitch-card-image {
     position: relative;
     height: 200px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .pitch-card-image img {
+    width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.pitch-card-image-wrapper:hover .pitch-card-image img {
+    transform: scale(1.05);
 }
 
 .pitch-badge {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.75rem;
 }
 
 .pitch-type-badge {
     font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.4rem 0.6rem;
 }
 
+/* ============= PITCH CARD TEXT ============= */
 .pitch-card-title {
-    font-size: 1.1rem;
-    font-weight: 500;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #212529;
+    line-height: 1.3;
+    word-break: break-word;
 }
 
 .pitch-facility-name {
     font-size: 0.85rem;
+    color: #495057;
+    margin-bottom: 0.5rem;
 }
 
 .pitch-address {
     font-size: 0.8rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
 }
 
+.pitch-address i,
+.pitch-facility-name i {
+    color: #212529;
+    width: 16px;
+}
+
+/* ============= PRICE DISPLAY ============= */
 .price-display {
     background-color: #f8f9fa;
     border-radius: 6px;
+    border: 1px solid #e9ecef;
+    padding: 0.75rem;
+    text-align: center;
 }
 
 .price-label {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    color: #6c757d;
+    font-weight: 600;
 }
 
 .price-value {
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.35rem;
+    font-weight: 700;
     color: #212529;
+    margin: 0.25rem 0;
 }
 
 .price-unit {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 400;
     color: #6c757d;
 }
 
+/* ============= LOGIN LINK ============= */
 .login-link {
     font-size: 0.8rem;
     color: #6c757d;
@@ -164,17 +260,85 @@
 
 .login-link a {
     color: #212529;
-    font-weight: 500;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-.pagination-info {
-    font-size: 0.9rem;
+.login-link a:hover {
+    color: #000;
+    text-decoration: underline;
 }
 
+/* ============= EMPTY STATE ============= */
 .empty-state-icon {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    color: #dee2e6;
+    margin-bottom: 1rem;
 }
 
 .empty-state-title {
     font-size: 1.5rem;
+    font-weight: 600;
+    color: #212529;
+}
+
+.empty-state-title + p {
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+/* ============= RESPONSIVE ============= */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .pitch-card-image {
+        height: 180px;
+    }
+
+    .pitch-card-title {
+        font-size: 0.95rem;
+    }
+
+    .price-value {
+        font-size: 1.2rem;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+    }
+
+    .pagination .page-link {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-header h1 {
+        font-size: 1.25rem;
+    }
+
+    .pitch-card-image {
+        height: 150px;
+    }
+
+    .pitch-card-title {
+        font-size: 0.9rem;
+    }
+
+    .price-display {
+        padding: 0.5rem;
+    }
+
+    .price-value {
+        font-size: 1rem;
+    }
+
+    .btn-sm {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.85rem;
+    }
 }

@@ -1,9 +1,253 @@
-.pitch-card-img {
-    height: 200px;
-    object-fit: cover;
+/* ============= FAVORITE BUTTON ============= */
+.favorite-form-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    margin: 0;
 }
 
-.pitch-card-placeholder {
-    height: 200px;
-    line-height: 200px;
+.favorite-badge-btn {
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    padding: 0;
+    outline: none;
+}
+
+.favorite-badge-btn:hover:not(.loading) {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: scale(1.12);
+}
+
+.favorite-badge-btn:active:not(.loading) {
+    transform: scale(0.95);
+}
+
+.favorite-badge-btn i {
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.favorite-badge-btn i.fas {
+    color: #dc3545;
+}
+
+.favorite-badge-btn i.far {
+    color: #6c757d;
+}
+
+.favorite-badge-btn.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.favorite-badge-btn.loading i {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============= FAVORITE CARD ============= */
+.favorite-card {
+    transition: all 0.3s ease;
+    opacity: 1;
+}
+
+.favorite-card.removing {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+/* ============= FAVORITE BUTTON IN LIST ============= */
+.favorite-btn-remove {
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.favorite-btn-remove:hover:not(.loading) {
+    transform: scale(1.02);
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white !important;
+}
+
+.favorite-btn-remove.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.favorite-btn-remove i {
+    transition: transform 0.3s ease;
+}
+
+.favorite-btn-remove:hover i {
+    transform: scale(1.15);
+}
+
+/* ============= REMOVE FAVORITE FORM ============= */
+.remove-favorite-form {
+    margin: 0;
+    width: 100%;
+}
+
+.remove-favorite-form button {
+    width: 100%;
+}
+
+/* ============= NOTIFICATION TOAST ============= */
+.alert {
+    min-width: 280px;
+    max-width: 450px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 4px solid #28a745;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-left: 4px solid #17a2b8;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 4px solid #dc3545;
+}
+
+.alert .btn-close {
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.alert .btn-close:hover {
+    opacity: 0.75;
+}
+
+.alert i {
+    font-size: 1.1rem;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+.alert.hide {
+    animation: slideOut 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============= FAVORITE PAGE EMPTY STATE ============= */
+#empty-state {
+    padding: 3rem 1rem;
+}
+
+#empty-state i {
+    font-size: 3.5rem;
+    color: #dee2e6;
+}
+
+#empty-state h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #212529;
+}
+
+#empty-state p {
+    font-size: 0.95rem;
+    color: #6c757d;
+}
+
+/* ============= RESPONSIVE ============= */
+@media (max-width: 768px) {
+    .favorite-badge-btn {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+    }
+
+    .favorite-badge-btn i {
+        font-size: 1rem;
+    }
+
+    .favorite-badge-btn:hover:not(.loading) {
+        transform: scale(1.1);
+    }
+
+    .alert {
+        min-width: 250px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .favorite-badge-btn {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+    }
+
+    .favorite-badge-btn i {
+        font-size: 0.95rem;
+    }
+
+    .alert {
+        min-width: 90vw;
+        max-width: none;
+    }
+
+    #empty-state {
+        padding: 2rem 1rem;
+    }
+
+    #empty-state i {
+        font-size: 3rem;
+    }
+
+    #empty-state h4 {
+        font-size: 1.25rem;
+    }
 }
